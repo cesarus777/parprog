@@ -1,0 +1,11 @@
+/build
+/build/*
+/install
+/install/*
+
+*/compile_commands.json
+
+*/types.vim
+
+*/a.out
+*.swp
