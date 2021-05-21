@@ -1,11 +1,10 @@
 /build
-/build/*
 /install
-/install/*
 
-*/compile_commands.json
+/.cache
+**/.clangd
+**/compile_commands.json
 
-*/types.vim
-
-*/a.out
-*.swp
+**/a.out
+**.swp
+**/types.vim
