@@ -1,7 +1,7 @@
 /build
 /install
 
-/.cache
+**/.cache
 **/.clangd
 **/compile_commands.json
 
