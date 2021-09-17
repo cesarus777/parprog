@@ -79,7 +79,7 @@ def calc_diff(test_case: test_ctx.test_case):
                                                 highlight='#fff',
                                                 lowlight='#000')
             diff_img_name = ""
-            metrics_threshold = 0.002
+            metrics_threshold = 0.01
             if is_diff > metrics_threshold:
                 diff_img_name = os.path.splitext(test_case.test_res_file)[0] + "-diff.png"
                 diff_img.save(filename=diff_img_name)
