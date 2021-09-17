@@ -16,7 +16,7 @@
 #ifdef FLT_TYPE_FLOAT
 
 typedef float flt_type;
-#define FLT_PRINT_FORMAT "%f"
+#define FLT_PRINT_FORMAT "f"
 #define FLT_ZERO 0.0f
 #define FLT_ONE  1.0f
 #define FLT_TYPE_EPSILON FLT_EPSILON
@@ -36,7 +36,7 @@ typedef float flt_type;
 #elif FLT_TYPE_DOUBLE
 
 typedef double flt_type;
-#define FLT_PRINT_FORMAT "%lf"
+#define FLT_PRINT_FORMAT "lf"
 #define FLT_ZERO 0.0
 #define FLT_ONE  1.0
 #define FLT_TYPE_EPSILON DBL_EPSILON
@@ -56,7 +56,7 @@ typedef double flt_type;
 #elif FLT_TYPE_LONG_DOUBLE
 
 typedef long double flt_type;
-#define FLT_PRINT_FORMAT "%Lf"
+#define FLT_PRINT_FORMAT "Lf"
 #define FLT_ZERO 0.0l
 #define FLT_ONE  1.0l
 #define FLT_TYPE_EPSILON LDBL_EPSILON
