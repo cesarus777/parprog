@@ -2,47 +2,34 @@
 
 #include "mpi/mpi.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 
+
+
+#define myMPI_NOT_INITIALIZED -1
+#define myMPI_FINALIZED       -2
 
 #ifdef EXIT_ON_FAIL
-#define MPI_ERROR_EXIT_ON_FAIL 1
+  #define myMPI_ERROR_EXIT_ON_FAIL 1
 #else
-#define MPI_ERROR_EXIT_ON_FAIL 0
+  #define myMPI_ERROR_EXIT_ON_FAIL 0
 #endif
 
 
 
-const char *MPI_decode_error(int MPI_ret_val) {
-  switch(MPI_ret_val) {
-    case MPI_ERR_BUFFER:
-      return "Invalid buffer pointer";
-    case MPI_ERR_COUNT:
-      return "Invalid count argument";
-    case MPI_ERR_TYPE:
-      return "Invalid datatype argument";
-    case MPI_ERR_COMM:
-      return "Invalid communicator";
-    case MPI_ERR_RANK:
-      return "Invalid rank";
-    default:
-      return "Unknown error";
+const char *myMPI_decode_error(int MPI_ret_val);
+
+#define TRY_MPI(mpi_ret_val)                                                   \
+  if ((mpi_ret_val) != MPI_SUCCESS) {                                          \
+    fprintf(stderr, "%s:%d '" #mpi_ret_val "' fail: %s with error code %d\n",  \
+            __FILE__, __LINE__, myMPI_decode_error(mpi_ret_val),               \
+            (mpi_ret_val));                                                    \
+    if (myMPI_ERROR_EXIT_ON_FAIL) {                                            \
+      MPI_Finalize();                                                          \
+      exit(EXIT_FAILURE);                                                      \
+    }                                                                          \
   }
 
-  return "Unknown error";
-}
+int myMPI_get_rank_and_size(int *rank, int *size);
 
-
-
-#define MPI_TRY(MPI_ret_val) \
-    if((MPI_ret_val) != MPI_SUCCESS) { \
-      fprintf(stderr, \
-              "%s:%d '" #MPI_ret_val "' fail: %s with error code %d\n", \
-              __FILE__, \
-              __LINE__, \
-              MPI_decode_error(MPI_ret_val), \
-              (MPI_ret_val)); \
-      if(MPI_ERROR_EXIT_ON_FAIL) { \
-        MPI_Finalize(); \
-        exit(EXIT_FAILURE); \
-      } \
-    }
