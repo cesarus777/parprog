@@ -17,14 +17,9 @@ set(exp_calc-parallel_targets
 
 foreach(target IN LISTS exp_calc-targets)
   add_executable(${target} "${target}.c")
+  target_compile_definitions(${target} PUBLIC "FLT_TYPE_${FLT_TYPE}")
   target_compile_options(${target} PUBLIC "-Wall" "-Wextra" "-Wpedantic" "-Werror")
   target_link_libraries(${target} m)
-endforeach()
-
-
-
-foreach(target IN LISTS exp_calc-targets)
-  target_compile_definitions(${target} PUBLIC "FLT_TYPE_${FLT_TYPE}")
 endforeach()
 
 
@@ -34,7 +29,7 @@ if(PARALLEL)
   foreach(target IN LISTS exp_calc-parallel_targets)
     target_include_directories(${target} PUBLIC ${MPI_INCLUDE_PATH})
     target_compile_definitions(${target} PUBLIC PARALLEL)
-    target_link_libraries(${target} ${MPI_LIBRARIES})
+    target_link_libraries(${target} ${MPI_LIBRARIES} ${MPI_SUPPORT_LIBRARIES})
   endforeach()
 endif()
 
@@ -45,9 +40,7 @@ target_link_libraries(parallel_with_long_arithmetic ${GMP_LIBRARIES})
 
 
 
-install(TARGETS sequential 
-                parallel_with_floats 
-                parallel_with_long_arithmetic
+install(TARGETS ${exp_calc-targets}
     RUNTIME
     DESTINATION exp_calc
     COMPONENT exp_calc
