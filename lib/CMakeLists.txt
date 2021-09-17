@@ -1,7 +1,17 @@
 if(ENABLED_PROJECTS STREQUAL "ALL")
   set(ENABLED_PROJECTS
-      "exp_calc")
+      heat_equation
+      exp_calc
+      integral
+      OpenMP
+      ray_tracer)
 endif()
+
+if(NOT "support" IN_LIST "${ENABLED_PROJECTS}")
+  set(ENABLED_PROJECTS "support" ${ENABLED_PROJECTS})
+endif()
+
+message("-- ENABLED_PROJECTS: ${ENABLED_PROJECTS}")
 
 
 
@@ -12,6 +22,10 @@ endif()
 
 if(DEFINED FLT_TYPE)
   message("-- FLT_TYPE set to ${FLT_TYPE}")
+endif()
+
+if(PARALLEL)
+  set(MPI_SUPPORT_LIBRARIES support_mpi)
 endif()
 
 
